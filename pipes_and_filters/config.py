@@ -11,7 +11,7 @@ class Settings(BaseSettings):
     RECIPIENT_EMAIL: str = getenv("RECIPIENT_EMAIL")
 
     FILTER_QUEUE: str = getenv("FILTER_QUEUE")
-    STREAMING_QUEUE: str = getenv("STREAMING_QUEUE")
+    SCREAMING_QUEUE: str = getenv("SCREAMING_QUEUE")
     PUBLISH_QUEUE: str = getenv("PUBLISH_QUEUE")
 
 

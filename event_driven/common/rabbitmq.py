@@ -1,7 +1,8 @@
 import time
 import pika
 import logging
-from config import settings
+
+from common.config import settings
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)

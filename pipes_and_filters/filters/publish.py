@@ -1,10 +1,11 @@
-import os
 import multiprocessing as mp
 import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 import logging
 from dotenv import load_dotenv
+
+from config import settings
 
 load_dotenv()
 logger = logging.getLogger(__name__)
@@ -18,17 +19,17 @@ class PublishProcess(mp.Process):
 
     def send_email(self, user_alias, text):
         msg = MIMEMultipart()
-        msg['From'] = os.getenv('EMAIL_USER')
-        msg['To'] = os.getenv('RECIPIENT_EMAIL')
+        msg['From'] = settings.EMAIL_USER
+        msg['To'] = settings.RECIPIENT_EMAIL
         msg['Subject'] = f"New Message from {user_alias}"
 
         body = f"From user: {user_alias}\nMessage: {text}"
         msg.attach(MIMEText(body, 'plain'))
 
         try:
-            server = smtplib.SMTP(os.getenv('SMTP_SERVER'), int(os.getenv('SMTP_PORT')))
+            server = smtplib.SMTP(settings.SMTP_SERVER, settings.SMTP_PORT)
             server.starttls()
-            server.login(os.getenv('EMAIL_USER'), os.getenv('EMAIL_PASSWORD'))
+            server.login(settings.EMAIL_USER, settings.EMAIL_PASSWORD)
             server.send_message(msg)
             server.quit()
             return True

@@ -17,7 +17,7 @@ def send_email(user_alias, text):
     msg = MIMEMultipart()
     msg['From'] = settings.EMAIL_USER
     msg['To'] = settings.RECIPIENT_EMAIL
-    msg['Subject'] = f"New Message from {user_alias}"
+    msg['Subject'] = f"New message from {user_alias}"
 
     body = f"From user: {user_alias}\nMessage: {text}"
     msg.attach(MIMEText(body, 'plain'))

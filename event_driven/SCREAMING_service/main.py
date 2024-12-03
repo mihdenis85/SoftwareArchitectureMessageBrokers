@@ -15,7 +15,6 @@ def callback(ch, method, properties, body):
         message = json.loads(body)
         message['text'] = message['text'].upper()
 
-        # Forward to publish service
         connection = get_rabbitmq_connection()
         channel = connection.channel()
         channel.queue_declare(queue=settings.PUBLISH_QUEUE)

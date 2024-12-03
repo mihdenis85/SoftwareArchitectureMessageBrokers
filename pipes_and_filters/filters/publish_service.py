@@ -42,7 +42,6 @@ class PublishProcess(mp.Process):
         while True:
             message = self.input_queue.get()
 
-            # Check for termination signal
             if message is None:
                 break
 

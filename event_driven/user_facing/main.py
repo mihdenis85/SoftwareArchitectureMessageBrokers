@@ -4,6 +4,7 @@ import logging
 from fastapi import FastAPI, HTTPException
 from dotenv import load_dotenv
 from common.rabbitmq import get_rabbitmq_connection
+from schemas import Message
 
 load_dotenv()
 logging.basicConfig(level=logging.INFO)
@@ -18,10 +19,8 @@ async def send_message(message: Message):
         connection = get_rabbitmq_connection()
         channel = connection.channel()
 
-        # Declare the queue
         channel.queue_declare(queue=os.getenv('FILTER_QUEUE'))
 
-        # Send message to filter service
         channel.basic_publish(
             exchange='',
             routing_key=os.getenv('FILTER_QUEUE'),

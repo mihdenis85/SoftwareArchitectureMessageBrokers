@@ -1,7 +1,6 @@
 import os
 import multiprocessing as mp
 from fastapi import FastAPI, HTTPException
-from pydantic import BaseModel
 import uvicorn
 from filters.filter_service import FilterProcess
 from filters.screaming_service import ScreamingProcess
@@ -9,19 +8,14 @@ from filters.publish_service import PublishProcess
 from dotenv import load_dotenv
 import logging
 
+from schemas import Message
+
 load_dotenv()
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 app = FastAPI()
 
-
-class Message(BaseModel):
-    user_alias: str
-    text: str
-
-
-# Global queues
 filter_input_queue = None
 processes = []
 
@@ -43,12 +37,10 @@ async def send_message(message: Message):
 async def startup_event():
     global filter_input_queue, processes
 
-    # Create queues
     filter_input_queue = mp.Queue()
     screaming_queue = mp.Queue()
     publish_queue = mp.Queue()
 
-    # Create and start processes
     filter_process = FilterProcess(
         input_queue=filter_input_queue,
         output_queue=screaming_queue
@@ -75,10 +67,8 @@ async def startup_event():
 async def shutdown_event():
     global processes, filter_input_queue
 
-    # Signal processes to stop
     filter_input_queue.put(None)
 
-    # Wait for all processes to finish
     for process in processes:
         process.join()
         logger.info(f"Stopped process: {process.name}")

@@ -18,7 +18,6 @@ class FilterProcess(mp.Process):
         while True:
             message = self.input_queue.get()
 
-            # Check for termination signal
             if message is None:
                 if self.output_queue:
                     self.output_queue.put(None)

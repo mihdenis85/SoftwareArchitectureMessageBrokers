@@ -11,7 +11,6 @@ class FilterProcess(mp.Process):
         super().__init__()
         self.input_queue = input_queue
         self.output_queue = output_queue
-        self.name = "FilterProcess"
 
     def run(self):
         logger.info(f"{self.name} started")

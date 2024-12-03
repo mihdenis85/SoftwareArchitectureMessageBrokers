@@ -2,9 +2,9 @@ import os
 import multiprocessing as mp
 from fastapi import FastAPI, HTTPException
 import uvicorn
-from filters.filter_service import FilterProcess
-from filters.screaming_service import ScreamingProcess
-from filters.publish_service import PublishProcess
+from filters.filter import FilterProcess
+from filters.screaming import ScreamingProcess
+from filters.publish import PublishProcess
 from dotenv import load_dotenv
 import logging
 

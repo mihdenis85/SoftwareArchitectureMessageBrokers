@@ -1,0 +1,52 @@
+services:
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      - RABBITMQ_DEFAULT_USER=${RABBITMQ_USER}
+      - RABBITMQ_DEFAULT_PASS=${RABBITMQ_PASSWORD}
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "-q", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  user_facing:
+    build:
+      context: ./event_driven
+      dockerfile: user_facing/Dockerfile
+    ports:
+      - "8001:8000"
+    env_file: .env
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+
+  filter_service:
+    build:
+      context: ./event_driven
+      dockerfile: filter_service/Dockerfile
+    env_file: .env
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+
+  screaming_service:
+    build:
+      context: ./event_driven
+      dockerfile: SCREAMING_service/Dockerfile
+    env_file: .env
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+
+  publish_service:
+    build:
+      context: ./event_driven
+      dockerfile: publish_service/Dockerfile
+    env_file: .env
+    depends_on:
+      rabbitmq:
+        condition: service_healthy

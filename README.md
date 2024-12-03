@@ -4,6 +4,12 @@ This project is for comparing RabbitMQ message broker and basic pipes-and-filter
 
 ## Agenda
 
+* [Demo](#demo)
+* [Features](#features)
+* [Prerequisites](#prerequisites)
+* [Installation](#installation)
+* [Contacts](#contacts)
+
 ## Demo
 
 ## Features

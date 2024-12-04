@@ -12,6 +12,8 @@ This project is for comparing RabbitMQ message broker and basic pipes-and-filter
 
 ## Demo
 
+https://youtu.be/0P0O29V4K-U
+
 ## Features
 
 - User facing REST API service: receives POST request from the users consisting of message text and user alias.
